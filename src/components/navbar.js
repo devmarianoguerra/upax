@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-info">
       <a className="navbar-brand" href="#">
         Soluciones Empresariales SA de CV
       </a>
