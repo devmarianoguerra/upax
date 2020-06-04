@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import * as firebase from "firebase";
 
 class Delete extends React.Component {
   state = {
@@ -16,7 +17,15 @@ class Delete extends React.Component {
   };
 
   handleClick = () => {
-    console.log("Se hizo click");
+    var user = firebase.auth().currentUser;
+    user
+      .delete()
+      .then(function () {
+        return <h1>El usuario ha sido borrado</h1>;
+      })
+      .catch(function (error) {
+        return <h1>Ha ocurrido un error. Intenta de nuevo por favor</h1>;
+      });
   };
 
   render() {
@@ -27,16 +36,16 @@ class Delete extends React.Component {
         </h1>
         <Form style={{ marginLeft: 50, marginRight: 500, paddingTop: 20 }}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Usuario</Form.Label>
+            <Form.Label>Usuario:</Form.Label>
             <Form.Control
               type="number"
-              placeholder="Introduce tu número de usuario"
+              placeholder="Introduce tu correo"
               onChange={this.handleUser}
             />
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Contraseña</Form.Label>
+            <Form.Label>Contraseña:</Form.Label>
             <Form.Control
               type="password"
               placeholder="Introduce tu contraseña"

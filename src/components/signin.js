@@ -23,6 +23,8 @@ class SignIn extends React.Component {
       .catch(function (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
       });
   };
 
@@ -34,7 +36,7 @@ class SignIn extends React.Component {
         </h1>
         <Form style={{ marginLeft: 50, marginRight: 500, paddingTop: 20 }}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Usuario</Form.Label>
+            <Form.Label>Usuario:</Form.Label>
             <Form.Control
               type="email"
               placeholder="Introduce tu correo"
@@ -43,7 +45,7 @@ class SignIn extends React.Component {
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Contraseña</Form.Label>
+            <Form.Label>Contraseña:</Form.Label>
             <Form.Control
               type="password"
               placeholder="Introduce tu contraseña"
