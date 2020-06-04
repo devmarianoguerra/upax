@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import * as firebase from "firebase";
 
 class LogIn extends React.Component {
   state = {
@@ -15,8 +16,32 @@ class LogIn extends React.Component {
     this.setState({ pass: e.target.value });
   };
 
-  handleClick = () => {
-    console.log("Se hizo click");
+  userAccess = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.user, this.state.pass)
+      .catch(function (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+      });
+  };
+
+  authState = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+        // ...
+      } else {
+        console.log("No hay usuarios activos");
+      }
+    });
   };
 
   render() {
@@ -27,8 +52,8 @@ class LogIn extends React.Component {
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Usuario</Form.Label>
             <Form.Control
-              type="number"
-              placeholder="Introduce tu número de usuario"
+              type="email"
+              placeholder="Introduce tu correo"
               onChange={this.handleUser}
             />
             <Form.Text className="text-muted">
@@ -44,11 +69,11 @@ class LogIn extends React.Component {
               onChange={this.handlePass}
             />
           </Form.Group>
-          <Button variant="primary" onClick={this.handleClick}>
-            {/*type:submit*/}
+          <Button variant="primary" onClick={this.userAccess}>
             Entrar
           </Button>
         </Form>
+        <div>{this.authState()}</div>
       </>
     );
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import * as firebase from "firebase";
 
 class SignIn extends React.Component {
   state = {
@@ -15,8 +16,14 @@ class SignIn extends React.Component {
     this.setState({ pass: e.target.value });
   };
 
-  handleClick = () => {
-    console.log("Se hizo click");
+  postUser = () => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.state.user, this.state.pass)
+      .catch(function (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
 
   render() {
@@ -29,8 +36,8 @@ class SignIn extends React.Component {
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Usuario</Form.Label>
             <Form.Control
-              type="number"
-              placeholder="Introduce tu número de usuario"
+              type="email"
+              placeholder="Introduce tu correo"
               onChange={this.handleUser}
             />
           </Form.Group>
@@ -43,7 +50,7 @@ class SignIn extends React.Component {
               onChange={this.handlePass}
             />
           </Form.Group>
-          <Button variant="success" onClick={this.handleClick}>
+          <Button variant="success" onClick={this.postUser}>
             Registrarse
           </Button>
         </Form>
