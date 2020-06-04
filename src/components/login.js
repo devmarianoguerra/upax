@@ -41,7 +41,6 @@ class LogIn extends React.Component {
         var isAnonymous = user.isAnonymous;
         var uid = user.uid;
         var providerData = user.providerData;
-        // ...
       } else {
         console.log("No hay usuarios activos");
       }
